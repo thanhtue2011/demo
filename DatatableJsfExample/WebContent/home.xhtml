@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+    <h:head>
+        <title>Example Bank</title>
+    </h:head>
+    <h:body align="center">
+        <h:form id="form1">
+            <p:growl id="messages" showDetail="true"/>
+            <p:panel header="Demo Bank List for JSF" style="width: 1050px;"> 
+                <p:panelGrid columns="2">
+                    <h:outputLabel for="name" value="Bank Name: " />
+                    <p:inputText  value="#{dataview.name}"/>
+                    <h:outputLabel for="name" value="Time: " />
+                    <p:inputText  value="#{dataview.time}">
+                    
+                    </p:inputText>
+                    <h:outputLabel for="time" value="Trang thai: " />
+                     <p:selectOneMenu value="#{dataview.status}">
+			   	     <f:selectItem itemValue="Dang su dung" itemLabel="Dang su dung" />
+			   	      <f:selectItem itemValue="Tam dung" itemLabel="Tam dung" />
+			   	      <f:selectItem itemValue="Ngung su dung" itemLabel="Ngung su dung" />
+			         </p:selectOneMenu>
+                    <h:outputLabel for="public" value="Public: " />
+                    <p:selectOneRadio value="#{dataview.pub}">
+			     	<f:selectItem itemValue="true" itemLabel="Yes" />
+			   	   <f:selectItem itemValue="false" itemLabel="No" />
+			       </p:selectOneRadio>
+                    <f:facet name="footer">
+                        <h:commandButton value="Add Bank" action="#{dataview.addAction}"/>
+                    </f:facet>
+                </p:panelGrid>
+               
+                <p:panelGrid columns="9">
+                <h:outputLabel for="name" value="Search: "/>
+                  <p:inputText  value="Dang hoan thien...."/>
+                   <h:outputLabel for="name" value="Sort by: "/>
+                  <h:outputLabel for="name" value="Time: "/>
+                  <p:selectOneMenu value="#{dataview.time}">
+			   	     <f:selectItem itemValue="Tang dan" itemLabel="Tang dan" />
+			   	      <f:selectItem itemValue="Giam dan" itemLabel="Giam dan" />
+			         </p:selectOneMenu>
+			       <h:outputLabel for="name" value="Status: "/>
+			       <p:selectOneMenu value="#{dataview.status}">
+			   	      <f:selectItem itemLabel="Select Bank" itemValue="" />
+			        <f:selectItems value="#{dataview.status}"/>
+			        </p:selectOneMenu>
+			       <h:outputLabel for="name" value="Public: "/>
+			       <p:selectOneRadio value="#{dataview.pub}">
+			     	<f:selectItem itemValue="true" itemLabel="Yes" />
+			   	   <f:selectItem itemValue="false" itemLabel="No" />
+			       </p:selectOneRadio>
+                </p:panelGrid>
+                <p:spacer height="50px;"/>
+                <p:dataTable value="#{dataview.banks}" var="o" editable="true">
+                    <f:facet name="header">  
+                        Bank List  
+                    </f:facet>
+                    <p:ajax event="rowEdit" listener="#{dataview.onEdit}" update=":form1:messages" />  
+                    <p:ajax event="rowEditCancel" listener="#{dataview.onCancel}" update=":form1:messages" /> 
+                    <p:column>
+                        <f:facet name="header">  
+                            <h:outputText value="Name" />  
+                        </f:facet>
+                        <p:cellEditor>  
+                            <f:facet name="output">  
+                                <h:outputText value="#{o.name}" />  
+                            </f:facet>  
+                            <f:facet name="input">  
+                                <p:inputText value="#{o.name}"/>  
+                            </f:facet>  
+                        </p:cellEditor> 
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">  
+                            <h:outputText value="Time" />  
+                        </f:facet>
+                        <p:cellEditor>  
+                            <f:facet name="output">  
+                                <h:outputText value="#{o.time}">
+                                
+                                </h:outputText>
+                            </f:facet>  
+                            <f:facet name="input">  
+                                <p:inputText value="#{o.time}"> 
+                                
+                                </p:inputText>
+                            </f:facet>  
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">  
+                            <h:outputText value="Status" />  
+                        </f:facet>
+                        <p:cellEditor>  
+                            <f:facet name="output">  
+                                <h:outputText value="#{o.status}" />  
+                            </f:facet>  
+                            <f:facet name="input">  
+                                <p:inputText value="#{o.status}"/>  
+                            </f:facet>  
+                        </p:cellEditor>
+                    </p:column>  
+                        <p:column>
+                        <f:facet name="header">  
+                            <h:outputText value="Public" />  
+                        </f:facet>
+                        <p:cellEditor>  
+                            <f:facet name="output">  
+                                <h:outputText value="#{o.pub}" />  
+                            </f:facet>  
+                            <f:facet name="input">  
+                                <p:inputText value="#{o.pub}" />  
+                            </f:facet>  
+                        </p:cellEditor>
+                    </p:column>              
+                    <p:column headerText="Options" style="width:100px">  
+                        <p:rowEditor />  
+                    </p:column> 
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+    </h:body>
+</html>
