@@ -5,7 +5,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      >
+       >
     <h:head>
         <title>Example Bank</title>
     </h:head>
@@ -15,18 +15,16 @@
             <p:panel header="Demo Bank List for JSF" style="width: 1050px;"> 
                 <p:panelGrid columns="2">
                     <h:outputLabel for="name" value="Bank Name: " />
-                    <p:inputText  value="#{dataview.name}"/>
+                     <p:inputText  value="#{dataview.name}"/>
                     <h:outputLabel for="name" value="Time: " />
-                    <p:inputText  value="#{dataview.time}">
-                    
-                    </p:inputText>
-                    <h:outputLabel for="time" value="Trang thai: " />
+                    <p:calendar value="#{dataview.time}" showOn="button"></p:calendar>
+                    <h:outputLabel for="name" value="Trang thai: " />
                      <p:selectOneMenu value="#{dataview.status}">
 			   	     <f:selectItem itemValue="Dang su dung" itemLabel="Dang su dung" />
 			   	      <f:selectItem itemValue="Tam dung" itemLabel="Tam dung" />
 			   	      <f:selectItem itemValue="Ngung su dung" itemLabel="Ngung su dung" />
 			         </p:selectOneMenu>
-                    <h:outputLabel for="public" value="Public: " />
+                    <h:outputLabel for="name" value="Public: " />
                     <p:selectOneRadio value="#{dataview.pub}">
 			     	<f:selectItem itemValue="true" itemLabel="Yes" />
 			   	   <f:selectItem itemValue="false" itemLabel="No" />
@@ -35,27 +33,8 @@
                         <h:commandButton value="Add Bank" action="#{dataview.addAction}"/>
                     </f:facet>
                 </p:panelGrid>
-               
-                <p:panelGrid columns="9">
-                <h:outputLabel for="name" value="Search: "/>
-                  <p:inputText  value="Dang hoan thien...."/>
-                   <h:outputLabel for="name" value="Sort by: "/>
-                  <h:outputLabel for="name" value="Time: "/>
-                  <p:selectOneMenu value="#{dataview.time}">
-			   	     <f:selectItem itemValue="Tang dan" itemLabel="Tang dan" />
-			   	      <f:selectItem itemValue="Giam dan" itemLabel="Giam dan" />
-			         </p:selectOneMenu>
-			       <h:outputLabel for="name" value="Status: "/>
-			       <p:selectOneMenu value="#{dataview.status}">
-			   	      <f:selectItem itemLabel="Select Bank" itemValue="" />
-			        <f:selectItems value="#{dataview.status}"/>
-			        </p:selectOneMenu>
-			       <h:outputLabel for="name" value="Public: "/>
-			       <p:selectOneRadio value="#{dataview.pub}">
-			     	<f:selectItem itemValue="true" itemLabel="Yes" />
-			   	   <f:selectItem itemValue="false" itemLabel="No" />
-			       </p:selectOneRadio>
-                </p:panelGrid>
+		        
+                
                 <p:spacer height="50px;"/>
                 <p:dataTable value="#{dataview.banks}" var="o" editable="true">
                     <f:facet name="header">  
@@ -84,13 +63,11 @@
                         <p:cellEditor>  
                             <f:facet name="output">  
                                 <h:outputText value="#{o.time}">
-                                
+                                <f:convertDateTime pattern="dd/MM/yy" />
                                 </h:outputText>
                             </f:facet>  
-                            <f:facet name="input">  
-                                <p:inputText value="#{o.time}"> 
-                                
-                                </p:inputText>
+                            <f:facet name="input">   
+                                <p:calendar   value="#{o.time}" showOn="button"></p:calendar>
                             </f:facet>  
                         </p:cellEditor>
                     </p:column>
@@ -104,7 +81,11 @@
                                 <h:outputText value="#{o.status}" />  
                             </f:facet>  
                             <f:facet name="input">  
-                                <p:inputText value="#{o.status}"/>  
+                               <p:selectOneMenu value="#{o.status}">
+					   	     <f:selectItem itemValue="Dang su dung" itemLabel="Dang su dung" />
+					   	      <f:selectItem itemValue="Tam dung" itemLabel="Tam dung" />
+					   	      <f:selectItem itemValue="Ngung su dung" itemLabel="Ngung su dung" />
+					         </p:selectOneMenu>
                             </f:facet>  
                         </p:cellEditor>
                     </p:column>  
@@ -114,16 +95,21 @@
                         </f:facet>
                         <p:cellEditor>  
                             <f:facet name="output">  
-                                <h:outputText value="#{o.pub}" />  
+                                <h:selectBooleanCheckbox value="#{o.pub}" /> 
                             </f:facet>  
                             <f:facet name="input">  
-                                <p:inputText value="#{o.pub}" />  
+                               <h:selectBooleanCheckbox value="#{o.pub}"/>  
                             </f:facet>  
                         </p:cellEditor>
                     </p:column>              
                     <p:column headerText="Options" style="width:100px">  
                         <p:rowEditor />  
                     </p:column> 
+                    <p:column headerText="Search" sortBy="#{o.name}" filterMaxLength="45" filterBy="#{o.name}">
+					</p:column>
+					<p:column headerText="Sortby" sortBy="#{o.time}" filterMaxLength="45" >
+					</p:column> 
+                    
                 </p:dataTable>
             </p:panel>
         </h:form>

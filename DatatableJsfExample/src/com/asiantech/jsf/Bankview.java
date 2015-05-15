@@ -82,6 +82,6 @@ public class Bankview implements Serializable {
     public void onEdit(RowEditEvent event) {  
         FacesMessage msg = new FacesMessage("Sua thanh cong!",((Bank) event.getObject()).getName());  
         FacesContext.getCurrentInstance().addMessage(null, msg);  
-    }  
+    } 
 
 }
